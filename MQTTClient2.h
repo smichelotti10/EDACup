@@ -17,6 +17,7 @@
 #include <vector>
 
 #include <mosquitto.h>
+#include "MQTTListenChild.h"
 
 class MQTTListener
 {
@@ -43,13 +44,13 @@ public:
     bool subscribe(std::string topic);
     bool unsubscribe(std::string topic);
 
-    void setListener(MQTTListener *listener);
+    void setListener(MQTTListenChild *listener);
     void run();
 
 private:
     struct mosquitto *mosquittoInstance;
 
-    MQTTListener *listener;
+    MQTTListenChild *listener;
 
     friend void onMQTTMessage(struct mosquitto *mosquittoClient,
                               void *context,

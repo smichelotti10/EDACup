@@ -225,7 +225,7 @@ bool MQTTClient2::unsubscribe(string topic)
  * 
  * @param listener The MQTT message listener
  */
-void MQTTClient2::setListener(MQTTListener *listener)
+void MQTTClient2::setListener(MQTTListenChild *listener)
 {
     this->listener = listener;
 }
