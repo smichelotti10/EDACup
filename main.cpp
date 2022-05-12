@@ -14,9 +14,9 @@ int main ()
 void subscribeTopics (MQTTClient2 &client)
 {
 
-    for(int i = 1; i <5 ;)
+    for(int i = 1; i < 5 ; i++)
     {
-
+        
     }
 
 
