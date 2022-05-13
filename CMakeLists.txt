@@ -1,6 +1,6 @@
-﻿cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.0)
 
-project("EDACup")
+project("eda")
 
 set (CMAKE_CXX_STANDARD 11)
 
@@ -14,24 +14,23 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # UndefinedBehaviorSanitizer (UBSan)
     add_compile_options(-fsanitize=undefined)
     add_link_options(-fsanitize=undefined)
-endif()
-
-add_executable(main main.cpp MQTTClient2.cpp Players.cpp)
+    endif()
+    
+    add_executable(main main.cpp MQTTClient2.cpp GameModel.cpp MQTTListenChild.cpp Players.cpp Robot.cpp)
+    add_executable(test1 tests.cpp MQTTClient2.cpp GameModel.cpp MQTTListenChild.cpp Players.cpp Robot.cpp)
 
 # Packages
+find_package(raylib CONFIG REQUIRED)
 find_package(mosquitto REQUIRED)
 find_package(OpenSSL REQUIRED)
 
-target_include_directories(main PRIVATE ${MOSQUITTO_INCLUDE_DIRS})
-target_link_libraries(main PRIVATE ${MOSQUITTO_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto)
+target_include_directories(main PRIVATE ${raylib_INCLUDE_DIRS} ${MOSQUITTO_INCLUDE_DIRS})
+target_link_libraries(main PRIVATE ${raylib_LIBRARIES} ${MOSQUITTO_LIBRARIES} OpenSSL::SSL 
+        OpenSSL::Crypto)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # From "Working with CMake" documentation:
     target_link_libraries(main PRIVATE "-framework IOKit" "-framework Cocoa" "-framework OpenGL")
-    target_link_libraries(main PRIVATE ${MOSQUITTO_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto)
-    target_link_libraries(main PRIVATE m ${CMAKE_DL_LIBS} pthread GL rt X11)
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    target_include_directories(main PRIVATE ${MOSQUITTO_INCLUDE_DIRS})
-    target_link_libraries(main PRIVATE ${MOSQUITTO_LIBRARIES} OpenSSL::SSL OpenSSL::Crypto)
     target_link_libraries(main PRIVATE m ${CMAKE_DL_LIBS} pthread GL rt X11)
 endif()

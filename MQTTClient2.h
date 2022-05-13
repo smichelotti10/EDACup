@@ -18,11 +18,18 @@
 
 #include <mosquitto.h>
 
+using namespace std;
+
+/**
+* @brief ...
+*
+*/
 class MQTTListener
 {
 public:
-    virtual void onMessage(std::string topic, std::vector<char> payload) = 0;
+    virtual void onMessage(string topic, vector<char> payload) = 0;
 };
+
 
 /**
  * @brief Manages an MQTT client connection.
@@ -48,7 +55,6 @@ public:
 
 private:
     struct mosquitto *mosquittoInstance;
-
     MQTTListener *listener;
 
     friend void onMQTTMessage(struct mosquitto *mosquittoClient,

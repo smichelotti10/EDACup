@@ -13,6 +13,7 @@
 #include <cstring>
 #include <iostream>
 
+
 static void onMQTTMessage(struct mosquitto *mosquittoClient,
                           void *context,
                           const struct mosquitto_message *message);
